@@ -1,0 +1,10 @@
+= Webview-zoom-demo
+
+A simple hybrid demo app for zoom testing. 
+
+Camera is opened by javascript with https://developer.mozilla.org/fr/docs/Web/API/MediaDevices/getUserMedia[getUserMedia()] and zoom is applied by two methods :
+
+- A native zoom (realwear intent)
+- A front end zoom (MediaDevices API)
+
+These methods won't work on any device. It depends if you are using a realwear device and if your webview is old enough to zoom via MediaDevices. 
