@@ -1,0 +1,65 @@
+<html>
+
+<script>
+const constraints = {
+  video: {
+    width: {exact: 352},
+    height: {exact: 288}
+  }
+};
+
+navigator.mediaDevices
+  .getUserMedia(constraints)
+  .then((mediaStream) => {
+    const video = document.querySelector("video");
+    video.srcObject = mediaStream;
+
+    const [track] = mediaStream.getVideoTracks();
+    window.track = track;
+    const capabilities = track.getCapabilities();
+
+    // console.log(capabilities)
+
+    // const frontendZoomInput = document.getElementById("frontendZoomInput");
+    // frontendZoomInput.min = capabilities.zoom.min;
+    // frontendZoomInput.max = capabilities.zoom.max;
+    // frontendZoomInput.step = capabilities.zoom.step;
+
+    video.onloadedmetadata = () => {
+      video.play();
+    };
+  })
+  .catch((err) => {
+    console.error(`${err.name}: ${err.message}`);
+  });
+
+  const setNativeZoom = () => {
+    const value = document.getElementById("nativeZoomInput").value
+    document.getElementById("nativeZoomInput").nextElementSibling.value = value;
+    Camera.setZoom(value);
+  }
+
+  const setFrontendZoom = () => {
+    const value = document.getElementById("frontendZoomInput").value
+    document.getElementById("frontendZoomInput").nextElementSibling.value = value;
+    window.track.applyConstraints({advanced: [ {zoom: value} ]});
+  }
+</script>
+
+<body>
+<video></video>
+
+<div>
+    <h2>Native zoom (intent)</h2>
+    <input id="nativeZoomInput" name="zoom" type="range" min="0" max="100" onchange="setNativeZoom()">
+    <output>50</output>
+</div>
+
+<div>
+    <h2>FrontEnd zoom</h2>
+    <input id="frontendZoomInput" name="zoom" type="range" min="0" max="100" onchange="setFrontendZoom()">
+    <output>50</output>
+</div>
+
+</body>
+</html>
