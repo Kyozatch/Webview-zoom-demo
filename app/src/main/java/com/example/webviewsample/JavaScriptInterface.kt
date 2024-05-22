@@ -16,7 +16,7 @@ class JavaScriptInterface(private val mContext: Context) {
         Log.e("JS INTERFACE", "Zoom level $zoomLevel")
 
         val intent = Intent(ZOOM_INTENT)
-        intent.putExtra("zoomLevel", zoomLevel)
+        intent.putExtra("zoomlevel", zoomLevel)
         intent.component = ComponentName(SETTINGS_PACKAGE, ZOOM_RECEIVER)
         mContext.sendBroadcast(intent)
     }
