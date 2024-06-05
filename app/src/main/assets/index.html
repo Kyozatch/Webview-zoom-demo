@@ -50,6 +50,13 @@
     window.track.applyConstraints({advanced: [ {zoom: value} ]});
   }
 
+  window.startCameraEvent = new Event('startCamera');
+  window.addEventListener('startCamera', (event) => {
+    console.log("startCamera event");
+
+    startCamera();
+  }, false);
+
   window.stopCameraEvent = new Event('stopCamera');
   window.addEventListener('stopCamera', (event) => {
     console.log("stopCamera event");

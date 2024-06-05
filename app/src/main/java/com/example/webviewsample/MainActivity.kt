@@ -35,6 +35,14 @@ class MainActivity : ComponentActivity() {
         setContentView(myWebView)
     }
 
+    override fun onResume() {
+        myWebView!!.evaluateJavascript("(function() { window.dispatchEvent(startCameraEvent); })();"
+        ) {
+            Log.e("startCamera", "js event received")
+        }
+        super.onResume()
+    }
+
     override fun onPause() {
         myWebView!!.evaluateJavascript("(function() { window.dispatchEvent(stopCameraEvent); })();"
         ) {
