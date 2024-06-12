@@ -29,6 +29,7 @@
 
         video.onloadedmetadata = () => {
           video.play();
+          Camera.onCameraStreamReady();
         };
       })
       .catch((err) => {

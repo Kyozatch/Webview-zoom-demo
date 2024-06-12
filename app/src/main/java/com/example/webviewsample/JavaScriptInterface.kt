@@ -20,4 +20,10 @@ class JavaScriptInterface(private val mContext: Context) {
         intent.component = ComponentName(SETTINGS_PACKAGE, ZOOM_RECEIVER)
         mContext.sendBroadcast(intent)
     }
+
+    @JavascriptInterface
+    fun onCameraStreamReady() {
+        Log.e("JS INTERFACE", "onCameraStreamReady")
+        return (mContext as MainActivity).onCameraStreamReady()
+    }
 }

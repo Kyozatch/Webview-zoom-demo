@@ -1,7 +1,9 @@
 package com.example.webviewsample
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
+import android.view.MotionEvent
 import android.webkit.PermissionRequest
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -49,5 +51,33 @@ class MainActivity : ComponentActivity() {
             Log.e("stopCamera", "js event received")
         }
         super.onPause()
+    }
+
+    fun onCameraStreamReady() {
+        Thread {
+            try {
+                clickOnWebViewAfterDelay()
+            } catch (e: Exception) {
+                Log.e("onCameraStreamReady", e.message!!)
+            }
+        }.start()
+    }
+
+    private fun clickOnWebViewAfterDelay() {
+        val eventTime = SystemClock.uptimeMillis()
+        val downEvent = MotionEvent.obtain(
+            eventTime, eventTime, MotionEvent.ACTION_DOWN, 0f, 0f, 0
+        )
+        val upEvent = MotionEvent.obtain(
+            eventTime, eventTime + 100, MotionEvent.ACTION_UP, 0f, 0f, 0
+        )
+
+        myWebView?.dispatchTouchEvent(downEvent)
+        myWebView?.dispatchTouchEvent(upEvent)
+
+        downEvent.recycle()
+        upEvent.recycle()
+
+        Log.e("MainActivity", "Simulated click at x:0 y:0 of WebView")
     }
 }
